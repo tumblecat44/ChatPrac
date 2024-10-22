@@ -3,7 +3,8 @@ package dev.yeseong0412.authtemplate.domain.user.presentation
 import com.leegeonhee.chatwithgpt.ChatMessage
 import com.leegeonhee.chatwithgpt.ChatOnline
 import com.leegeonhee.chatwithgpt.ChatRoom
-import dev.yeseong0412.authtemplate.domain.chat.service.ChatRoomService
+import dev.yeseong0412.authtemplate.domain.chat.domain.entity.ChatRoomEntity
+import dev.yeseong0412.authtemplate.domain.chat.domain.service.ChatRoomService
 import dev.yeseong0412.authtemplate.global.auth.jwt.JwtUtils
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.messaging.handler.annotation.SendTo
@@ -12,17 +13,17 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/chat")
-class ChatRoomController(val chatRoomService: ChatRoomService,val jwtUtils: JwtUtils) {
+class ChatRoomController(val chatRoomService: ChatRoomService, val jwtUtils: JwtUtils) {
 
     @GetMapping("/rooms")
-    fun getAllRooms(): List<ChatRoom> = chatRoomService.getAllRooms()
+    fun getAllRooms(): MutableList<ChatRoomEntity> = chatRoomService.getAllRooms()
 
     @PostMapping("/rooms")
-    fun createRoom(@RequestParam name: String): ChatRoom = chatRoomService.createRoom(name)
+    fun createRoom(@RequestParam name: String): ChatRoomEntity = chatRoomService.createRoom(name)
 
-    @PostMapping("/rooms/{roomId}/invite")
-    fun inviteToRoom(@PathVariable roomId: String, @RequestParam participant: String): ChatRoom? =
-        chatRoomService.inviteToRoom(roomId, participant)
+//    @PostMapping("/rooms/{roomId}/invite")
+//    fun inviteToRoom(@PathVariable roomId: String, @RequestParam participant: String): ChatRoom? =
+//        chatRoomService.inviteToRoom(roomId, participant)
 
     // 채팅방 입장
     @MessageMapping("/enter/{roomId}")
