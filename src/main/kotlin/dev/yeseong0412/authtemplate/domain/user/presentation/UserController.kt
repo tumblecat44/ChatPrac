@@ -6,6 +6,7 @@ import dev.yeseong0412.authtemplate.domain.user.presentation.dto.request.Registe
 import dev.yeseong0412.authtemplate.domain.user.service.UserService
 import dev.yeseong0412.authtemplate.global.auth.jwt.JwtInfo
 import dev.yeseong0412.authtemplate.global.common.BaseResponse
+import io.swagger.v3.oas.annotations.Operation
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -17,7 +18,8 @@ class UserController(
     private val userService: UserService
 ) {
     @PostMapping("/register")
-    fun registerUser(@RequestBody registerUserRequest: RegisterUserRequest): BaseResponse<Unit> {
+    fun registerUser(
+        @RequestBody registerUserRequest: RegisterUserRequest): BaseResponse<Unit> {
         return userService.registerUser(registerUserRequest)
     }
 

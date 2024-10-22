@@ -7,6 +7,11 @@ data class ChatRoom(
 )
 
 data class ChatMessage(
-    val username: String,
+    val token: String,
+    val message: String
+)
+
+data class ChatOnline(
+    val writer : String,
     val message: String
 )

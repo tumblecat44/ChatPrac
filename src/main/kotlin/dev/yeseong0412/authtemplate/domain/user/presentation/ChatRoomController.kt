@@ -1,12 +1,18 @@
-package com.leegeonhee.chatwithgpt
+package dev.yeseong0412.authtemplate.domain.user.presentation
 
+import com.leegeonhee.chatwithgpt.ChatMessage
+import com.leegeonhee.chatwithgpt.ChatOnline
+import com.leegeonhee.chatwithgpt.ChatRoom
+import dev.yeseong0412.authtemplate.domain.chat.service.ChatRoomService
+import dev.yeseong0412.authtemplate.global.auth.jwt.JwtUtils
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.messaging.handler.annotation.SendTo
 import org.springframework.web.bind.annotation.*
 
+
 @RestController
 @RequestMapping("/chat")
-class ChatRoomController(val chatRoomService: ChatRoomService) {
+class ChatRoomController(val chatRoomService: ChatRoomService,val jwtUtils: JwtUtils) {
 
     @GetMapping("/rooms")
     fun getAllRooms(): List<ChatRoom> = chatRoomService.getAllRooms()
@@ -34,8 +40,9 @@ class ChatRoomController(val chatRoomService: ChatRoomService) {
 
     @MessageMapping("/chat/{roomId}")
     @SendTo("/topic/room/{roomId}")
-    fun sendMessage(@PathVariable roomId: String, message: ChatMessage): ChatMessage {
-        return message
+    fun sendMessage(@PathVariable roomId: String, message: ChatMessage): ChatOnline {
+        val toMessage = ChatOnline(writer =  jwtUtils.getUsername(message.token),message=message.message)
+        return toMessage
     }
 
 }

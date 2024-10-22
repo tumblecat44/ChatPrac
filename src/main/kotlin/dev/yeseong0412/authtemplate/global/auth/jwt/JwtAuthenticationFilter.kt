@@ -23,11 +23,23 @@ class JwtAuthenticationFilter(
         val token: String? = request.getHeader("Authorization")
         val path: String = request.servletPath
 
+        if (path.startsWith("/swagger") || path.startsWith("/v3/api-docs")) {
+            filterChain.doFilter(request, response)
+            return
+        }
+
         if (path.startsWith("/user/")
         ) {
             filterChain.doFilter(request, response)
             return
         }
+
+        if (path.startsWith("/ws")
+        ) {
+            filterChain.doFilter(request, response)
+            return
+        }
+
 
         if (token.isNullOrEmpty() || !token.startsWith("Bearer ")) {
             setErrorResponse(response, JwtErrorCode.JWT_EMPTY_EXCEPTION)

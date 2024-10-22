@@ -1,4 +1,5 @@
-package com.leegeonhee.chatwithgpt
+package dev.yeseong0412.authtemplate.domain.chat.service
+import com.leegeonhee.chatwithgpt.ChatRoom
 import org.springframework.stereotype.Service
 import java.util.concurrent.ConcurrentHashMap
 
