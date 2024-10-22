@@ -1,7 +1,6 @@
 package com.leegeonhee.chatwithgpt
 
 data class ChatRoom(
-    val id: String,
     val name: String,
     val participants: MutableList<String> = mutableListOf()
 )
